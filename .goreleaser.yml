@@ -26,6 +26,6 @@ archives:
 release:
   prerelease: auto
   github:
-    owner: aquasecurity
+    owner: ben-verkada
     name: tfsec-pr-commenter-action
 
