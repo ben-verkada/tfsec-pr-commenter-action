@@ -69,6 +69,7 @@ func main() {
 		comment := generateErrorMessage(result)
 		fmt.Printf("Preparing comment for violation of rule %v in %v:%v-%v\n", result.RuleID, result.Range.Filename, result.Range.StartLine, result.Range.EndLine)
 		fmt.Printf("Comment will be %v\n", result.Description)
+		fmt.Printf("Range Annotation will be %v\n", result.RangeAnnotation)
 		err := c.WriteMultiLineComment(result.Range.Filename, comment, result.Range.StartLine, result.Range.EndLine)
 		if err != nil {
 			// don't error if its simply that the comments aren't valid for the PR
