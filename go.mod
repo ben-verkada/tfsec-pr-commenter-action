@@ -1,4 +1,4 @@
-module github.com/aquasecurity/tfsec-github-commenter-action
+module github.com/ben-verkada/tfsec-github-commenter-action
 
 go 1.15
 
