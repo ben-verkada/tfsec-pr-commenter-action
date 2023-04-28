@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"net/url"
 	"os"
 	"strconv"
 	"strings"
-	"net/url"
 
 	"github.com/owenrumney/go-github-pr-commenter/commenter"
 )
@@ -67,7 +67,8 @@ func main() {
 	for _, result := range results {
 		result.Range.Filename = workingDir + strings.ReplaceAll(result.Range.Filename, workspacePath, "")
 		comment := generateErrorMessage(result)
-		fmt.Printf("Preparing comment for violation of rule %v in %v\n", result.RuleID, result.Range.Filename)
+		fmt.Printf("Preparing comment for violation of rule %v in %v:%v-%v\n", result.RuleID, result.Range.Filename, result.Range.StartLine, result.Range.EndLine)
+		fmt.Printf("Comment will be %v\n", result.Description)
 		err := c.WriteMultiLineComment(result.Range.Filename, comment, result.Range.StartLine, result.Range.EndLine)
 		if err != nil {
 			// don't error if its simply that the comments aren't valid for the PR
@@ -113,7 +114,7 @@ func createCommenter(token, owner, repo string, prNo int) (*commenter.Commenter,
 		url, err := url.Parse(githubApiUrl)
 		if err == nil {
 			enterpriseUrl := fmt.Sprintf("%s://%s", url.Scheme, url.Hostname())
-			c, err = commenter.NewEnterpriseCommenter(token, enterpriseUrl, enterpriseUrl, owner, repo, prNo)	
+			c, err = commenter.NewEnterpriseCommenter(token, enterpriseUrl, enterpriseUrl, owner, repo, prNo)
 		}
 	}
 
